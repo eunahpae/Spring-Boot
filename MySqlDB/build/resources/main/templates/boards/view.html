@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>View</title>
+</head>
+<body>
+<div class="container">
+    <p>글 번호 : [[${view.boardId}]]</p>
+    <p>조 회 수 : [[${view.read}]]</p>
+    <p>작 성 자 : [[${view.name}]]</p>
+    <p id="title">제 목 : [[${view.title}]]</p>
+    내 용 :
+    <div id="content">
+        <textarea readonly="readonly" class="form-control" th:text:${view.content}>[[${view.content}]]</textarea>
+    </div>
+    <button id="deleteBtn" class="btn btn-danger btn-sm float-right">삭제</button>
+    <button id="updateBtn" class="btn btn-info btn-sm float-right">수정</button>
+    <form id="form" th:action="@{/}" method="post"></form>
+</div>
+
+<script th:inline="javascript">
+    $(document).on('ready', function (e) {
+        var form = $("#form");
+        var boardId = [[${view.boardId}]];
+        $(document).on('click', '#deleteBtn', function (e) {
+            $('#form').attr("action", "delete");
+            form.append("<input type='hidden' name='boardId' value='" + boardId + "'>")
+            form.append("<input type='hidden' name='_method' value='delete'>")
+            form.submit();
+        })
+        $(document).on('click', '#updateBtn', function (e) {
+            var str = "<input class='form-control' width='250' placeholder='제목 입력' id='updateTitle'>";
+            $('#title').html(str);
+            str = "<textarea class='form-control' placeholder='내용 입력' id='updateContent'></textarea>";
+            $('#content').html(str);
+            $('#updateBtn').attr("id", "updateConfirmBtn");
+        })
+        $(document).on('click', '#updateConfirmBtn', function (e) {
+            $('#form').attr("action", "update");
+            var updateTitle = $('#updateTitle').val();
+            var updateContent = $('#updateContent').val();
+            form.append("<input type='hidden' name='boardId' value='" + boardId + "'>")
+            form.append("<input type='hidden' name='_method' value='put'>")
+            form.append("<input type='hidden' name='title' value='" + updateTitle + "'>")
+            form.append("<input type='hidden' name='content' value='" + updateContent + "'>")
+            form.submit();
+        })
+    })
+
+
+</script>
+
+</body>
+</html>

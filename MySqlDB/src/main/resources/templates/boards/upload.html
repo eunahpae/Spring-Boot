@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <form th:action="@{upload}" method="post">
+        <input type="text" class="form-control" name="name">
+        <input type="text" class="form-control" name="title">
+        <textarea class="form-control" name="content"></textarea>
+        <button type="submit">btn</button>
+    </form>
+</div>
+
+</body>
+</html>

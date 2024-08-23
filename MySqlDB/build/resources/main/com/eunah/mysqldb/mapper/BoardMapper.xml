@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eunah.mysqldb.mapper.BoardMapper">
+
+    <select id="boardCount" resultType="int">
+        select count(boardId) as cnt
+        from tbl_board;
+    </select>
+
+    <select id="getList" resultType="com.eunah.mysqldb.domain.Board">
+        select *
+        from tbl_board;
+    </select>
+
+    <select id="getBoard" resultType="com.eunah.mysqldb.domain.Board">
+        select *
+        from tbl_board
+        where boardId = #{boardId};
+    </select>
+
+    <insert id="uploadBoard" parameterType="com.eunah.mysqldb.domain.Board">
+        insert into tbl_board (title, content, name)
+        values (#{title}, #{content}, #{name});
+    </insert>
+
+    <update id="updateBoard" parameterType="com.eunah.mysqldb.domain.Board">
+        update tbl_board
+        set title=#{title},
+            content=#{content}
+        where boardId = #{boardId};
+    </update>
+
+    <delete id="deleteBoard" parameterType="Long">
+        delete
+        from tbl_board
+        where boardId = #{boardId};
+    </delete>
+
+</mapper>
